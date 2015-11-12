@@ -26,7 +26,7 @@ $xml = new DOMDocument;
 $xml->load($xml_fn);
 
 $xsl = new DOMDocument;
-$xsl->load('../stylesheets/jats-html.xsl');
+$xsl->load('../../stylesheets/jats-html.xsl');
 
 // Initialize and configure XSLT processor
 $proc = new XSLTProcessor;
@@ -46,6 +46,9 @@ $css = file_get_contents($css_fn); // external css
 error_log("HTML -> PDF ...");
 
 $mpdf=new mPDF();
+# PDF/A1-b compliance
+$mpdf->PDFA = true;
+
 $mpdf->WriteHTML($css,1);
 $mpdf->WriteHTML($html,2);
 $mpdf->Output($out_fn);
