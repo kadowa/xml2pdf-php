@@ -1,17 +1,32 @@
+#!/usr/bin/php
 <?php
+
+/*
+ * Convert XML to PDF with mpdf.
+ */
 
 include('../mpdf60/mpdf.php');
 
-$xml_fn = $argv[1];
-$css_fn = $argv[2];
-$out_fn = $argv[3];
+$longopts  = array(
+		"output:",
+		"xml:",
+		"xsl:",
+		"css:",		// optional
+);
+
+$options = getopt("o:", $longopts);
+
+$xml_fn = $options["xml"];
+$xsl_fn = $options["xsl"];
+$out_fn = isset($options["output"]) ? $options["output"] : $options["o"];
+$css_fn = $options["css"];
 
 // Load source documents
 $xml = new DOMDocument;
 $xml->load($xml_fn);
 
 $xsl = new DOMDocument;
-$xsl->load('../../stylesheets/jats-html.xsl');
+$xsl->load('../stylesheets/jats-html.xsl');
 
 // Initialize and configure XSLT processor
 $proc = new XSLTProcessor;
