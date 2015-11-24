@@ -16,8 +16,10 @@ $longopts  = array(
 $options = getopt("o:", $longopts);
 
 $out_fn = isset($options["output"]) ? $options["output"] : $options["o"];
+$css_fn = $options["css"];
 $html_fn = $options["html"];
 
+// Load source documents
 $html = file_get_contents($html_fn);
 
 // REMINDER: always import external stylsheets, otherwise mPDF is extremely slow
